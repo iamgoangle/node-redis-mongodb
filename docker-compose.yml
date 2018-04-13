@@ -1,0 +1,50 @@
+version: "3"
+services:
+  node-app:
+    container_name: "my-node"
+    image: node:9.11.1
+    environment:
+      - NODE_ENV=development
+      - FOO=bar
+    volumes:
+      - ./src:/var/www  
+    links:
+      - mongodb
+      - redis
+    networks:
+      - i-network
+    depends_on:
+      - mongodb  
+    ports:
+      - "8080:8080"
+
+  redis:
+    container_name: "my-redis"
+    image: redis:3.2.11
+    volumes:
+      - redis-data:/data
+    links:
+      - mongodb
+    networks:
+      - i-network  
+    ports:
+      - "6379"
+
+  mongodb:
+    image: mongo:latest
+    container_name: "my-mongodb"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db
+    networks:
+      - i-network
+    ports:
+      - 27017:27017
+
+networks:
+  i-network:
+
+volumes:
+  redis-data:        

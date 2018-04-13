@@ -1,0 +1,25 @@
+{
+  "name": "redis-mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamgoangle/node-redis-mongodb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamgoangle/node-redis-mongodb/issues"
+  },
+  "homepage": "https://github.com/iamgoangle/node-redis-mongodb#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongodb": "^3.0.6",
+    "morgan": "^1.9.0",
+    "redis": "^2.8.0"
+  }
+}
