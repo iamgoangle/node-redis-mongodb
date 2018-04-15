@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,11 @@
   },
   "homepage": "https://github.com/iamgoangle/node-redis-mongodb#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "mongodb": "^3.0.6",
+    "mongoose": "^5.0.14",
     "morgan": "^1.9.0",
+    "nodemon": "^1.17.3",
     "redis": "^2.8.0"
   }
 }
