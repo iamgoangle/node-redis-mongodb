@@ -14,27 +14,28 @@ services:
     ports:
       - 27017:27017
 
-  # node-app:
-  #   build: .
-  #   container_name: "my-node"
-  #   links:
-  #     - mongodb
-  #     - redis
-  #   networks:
-  #     - i-network
-  #   depends_on:
-  #     - mongodb
-  #   ports:
-  #     - "8080:8080"
+  node-app:
+    build: .
+    container_name: "my-node"
+    links:
+      - mongodb
+      - redis
+    networks:
+      - i-network
+    depends_on:
+      - redis
+    ports:
+      - "8080:8080"
 
   redis:
     container_name: "my-redis"
     image: redis:3.2.11
     volumes:
       - ./redis.conf:/usr/local/etc/redis/redis.conf
-      # - redis-data:/data
     networks:
       - i-network  
+    # environment:
+    #   - REDIS_PORT_6379_TCP_ADDR:"i-network:6379"  
     ports:
       - "6379:6379"
 
@@ -42,4 +43,4 @@ networks:
   i-network:
 
 volumes:
-  redis-data:        
+  redis-data:

@@ -2,10 +2,10 @@
  * @author  Teerapong, Singthong
  * @description
  *  Dear All friend,
- * 
+ *
  *  Please note that this example is simply to show how we implment caching layer
  *  with Redis and NodeJS, so do not use all example in prodution.
- * 
+ *
  *  Please refactoring first !!!!
  */
 
@@ -16,15 +16,16 @@ const todos = require("./models/todos");
 const { promisify } = require("util");
 
 const redisClient = require("redis").createClient;
-const redis = redisClient(6379, "localhost");
+const redis = redisClient({
+  host: "redis"
+});
 const getAsync = promisify(redis.get).bind(redis);
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://my-mongodb/todo");
-// mongoose.connect("mongodb://localhost:27017/todos");
+mongoose.connect("mongodb://my-mongodb/todos");
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -96,14 +97,23 @@ app.post("/todo", async (req, res) => {
       });
     }
 
-    let todo = new todos(req.body);
-    await todo.save();
-    res.status(200).json({
-      success: true,
-      data: todo
-    });
+    try {
+      let todo = new todos(req.body);
+      await todo.save();
+
+      res.status(200).json({
+        success: true,
+        data: todo
+      });
+    } catch (e) {
+      throw "Unable to insert new document";
+    }
   } catch (e) {
     console.error("Unable to add new todo", e);
+    res.status(400).json({
+      success: false,
+      message: "Unable to add new todo"
+    });
   }
 });
 
