@@ -25,7 +25,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://my-mongodb/todos");
+mongoose.connect("mongodb://mongodb:27017/todos");
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -151,6 +151,6 @@ app.patch("/todo/:title", async (req, res) => {
   });
 });
 
-app.listen(8080, () => {
+app.listen(3000, () => {
   console.log("Listening on port 8080");
 });
