@@ -67,6 +67,10 @@ app.get("/todo/:title", async (req, res) => {
     if (!getTitleDataFromCache) {
       let result = await todos.findOne({ title: title });
 
+      if (!result) {
+        throw 'Not found todo';
+      }
+
       // set to cache
       await redis.set(title, JSON.stringify(result));
 
@@ -84,6 +88,10 @@ app.get("/todo/:title", async (req, res) => {
     });
   } catch (e) {
     console.error("Unable to get todo by title", e);
+    res.status(400).json({
+      success: false,
+      message: e
+    });
   }
 });
 
@@ -151,6 +159,6 @@ app.patch("/todo/:title", async (req, res) => {
   });
 });
 
-app.listen(3000, () => {
+app.listen(8080, () => {
   console.log("Listening on port 8080");
 });

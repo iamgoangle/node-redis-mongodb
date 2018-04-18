@@ -10,7 +10,7 @@ services:
       - redis
     command: ["./wait-for-it.sh", "mongodb:27017", "--", "npm", "start"]
     ports:
-      - "3000:3000"
+      - "8080:8080"
       
   mongodb:
     image: mongo:latest
